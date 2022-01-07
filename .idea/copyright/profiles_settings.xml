@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="eneim_oss">
+    <module2copyright>
+      <element module="All" copyright="eneim_oss" />
+    </module2copyright>
+  </settings>
+</component>
