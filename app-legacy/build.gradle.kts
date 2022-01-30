@@ -23,7 +23,7 @@ android {
   compileSdk = libs.versions.build.compileSdk.get().toInt()
 
   defaultConfig {
-    applicationId = "app.wasabi.compose"
+    applicationId = "app.wasabi.legacy"
     minSdk = libs.versions.build.minSdk.get().toInt()
     targetSdk = libs.versions.build.targetSdk.get().toInt()
     versionCode = 1
@@ -50,33 +50,25 @@ android {
     }
   }
 
+  kotlinOptions {
+    jvmTarget = "11"
+    freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+  }
+
   buildFeatures {
     viewBinding = true
-    compose = true
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = libs.versions.jetpack.compose.compiler.get()
-  }
-
-  packagingOptions {
-    resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
   }
 }
 
 dependencies {
   implementation(libs.androidx.core)
+  implementation(libs.androidx.appcompat)
   implementation(libs.androidx.lifecycle.runtime)
 
-  implementation(libs.compose.ui)
-  implementation(libs.compose.ui.preview)
-  implementation(libs.compose.material)
-  implementation(libs.compose.activity)
-  implementation(libs.compose.viewmodel)
+  implementation(libs.androidx.material)
+  implementation(libs.androidx.constraintlayout)
 
   testImplementation(libs.test.junit.core)
   androidTestImplementation(libs.test.androidx.junit)
   androidTestImplementation(libs.test.androidx.espresso.core)
-  androidTestImplementation(libs.test.compose.ui.junit)
-  debugImplementation(libs.test.compose.ui.tool)
 }

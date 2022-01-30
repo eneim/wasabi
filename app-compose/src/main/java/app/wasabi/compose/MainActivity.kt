@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.wasabi
+package app.wasabi.compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -26,11 +26,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import app.wasabi.ui.theme.WasabiTheme
+import app.wasabi.compose.ui.theme.WasabiTheme
+import java.time.Instant
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
     setContent {
       WasabiTheme {
         // A surface container using the 'background' color from the theme

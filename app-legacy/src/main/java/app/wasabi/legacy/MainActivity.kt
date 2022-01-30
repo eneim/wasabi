@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package app.wasabi.ui.theme
+package app.wasabi.legacy
 
-import androidx.compose.ui.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+class MainActivity : AppCompatActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
+  }
+}

@@ -14,11 +14,43 @@
  * limitations under the License.
  */
 plugins {
-  id("com.android.application") version "7.1.0-rc01" apply false
-  id("com.android.library") version "7.1.0-rc01" apply false
+  id("com.android.application") version "7.1.0" apply false
+  id("com.android.library") version "7.1.0" apply false
   id("org.jetbrains.kotlin.android") version "1.6.10" apply false
 }
 
 tasks.register("clean", Delete::class) {
   delete(rootProject.buildDir)
+}
+
+allprojects {
+  afterEvaluate {
+    if (hasProperty("android") && hasProperty("dependencies")) {
+      dependencies {
+        "coreLibraryDesugaring"("com.android.tools:desugar_jdk_libs:1.1.5")
+      }
+    }
+  }
+
+  plugins.withType<com.android.build.gradle.BasePlugin>().configureEach {
+    extensions.findByType<com.android.build.gradle.BaseExtension>()?.apply {
+      compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+      }
+    }
+  }
+
+  tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = JavaVersion.VERSION_11.toString()
+    targetCompatibility = JavaVersion.VERSION_11.toString()
+  }
+
+  tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile>().configureEach {
+    kotlinOptions {
+      jvmTarget = "11"
+      freeCompilerArgs = freeCompilerArgs + arrayOf("-Xopt-in=kotlin.RequiresOptIn")
+    }
+  }
 }

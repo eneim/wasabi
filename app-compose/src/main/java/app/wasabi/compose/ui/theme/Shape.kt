@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.wasabi.ui.theme
+package app.wasabi.compose.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

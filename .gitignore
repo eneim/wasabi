@@ -26,3 +26,6 @@ local.properties
 /.idea/misc.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
+/app-legacy/.gitignore
+/app-legacy/src/androidTest/
+/app-legacy/src/test/
