@@ -19,13 +19,10 @@ plugins {
   id("org.jetbrains.kotlin.android")
 }
 
+// Check the root build.gradle.kts for common configurations (compileSdk, etc).
 android {
-  compileSdk = libs.versions.build.compileSdk.get().toInt()
-
   defaultConfig {
     applicationId = "app.wasabi.compose"
-    minSdk = libs.versions.build.minSdk.get().toInt()
-    targetSdk = libs.versions.build.targetSdk.get().toInt()
     versionCode = 1
     versionName = "1.0"
 
@@ -65,14 +62,35 @@ android {
 }
 
 dependencies {
+  implementation(project(":base"))
+  implementation(project(":shared-data"))
+  implementation(project(":service-common"))
+  implementation(project(":service-hnews"))
+  implementation(project(":service-qiita"))
+
   implementation(libs.androidx.core)
   implementation(libs.androidx.lifecycle.runtime)
+  implementation(libs.androidx.datastore.preferences.core)
+
+  implementation(libs.androidx.room.paging)
 
   implementation(libs.compose.ui)
   implementation(libs.compose.ui.preview)
   implementation(libs.compose.material)
   implementation(libs.compose.activity)
   implementation(libs.compose.viewmodel)
+  implementation(libs.compose.paging)
+
+  implementation(libs.accompanist.insets)
+  implementation(libs.accompanist.systemuicontroller)
+  implementation(libs.accompanist.pager)
+  implementation(libs.accompanist.pager.indicators)
+  implementation(libs.accompanist.webview)
+
+  implementation(libs.coil)
+  implementation(libs.coil.compose)
+
+  implementation(libs.square.logcat)
 
   testImplementation(libs.test.junit.core)
   androidTestImplementation(libs.test.androidx.junit)

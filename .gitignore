@@ -17,15 +17,17 @@ local.properties
 # Project exclude paths
 /buildSrc/build/
 /build/
-/.idea/.gitignore
-/app-compose/.gitignore
 /.idea/compiler.xml
-/app-compose/src/androidTest/java/app/wasabi/ExampleInstrumentedTest.kt
-/app-compose/src/test/java/app/wasabi/ExampleUnitTest.kt
 /.idea/gradle.xml
 /.idea/misc.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
-/app-legacy/.gitignore
-/app-legacy/src/androidTest/
-/app-legacy/src/test/
+/.idea/.gitignore
+/app-compose/.gitignore
+/*/.gitignore
+/*/src/androidTest/
+/*/src/test/
+
+# May enable later when we take the proguard into account.
+consumer-rules.pro
+proguard-rules.pro

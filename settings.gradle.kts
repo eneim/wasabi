@@ -38,3 +38,8 @@ dependencyResolutionManagement {
 rootProject.name = "Wasabi"
 include(":app-compose")
 include(":app-legacy")
+include(":base")
+include(":service-hnews")
+include(":shared-data")
+include(":service-qiita")
+include(":service-common")

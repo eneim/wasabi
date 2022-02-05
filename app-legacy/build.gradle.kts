@@ -19,13 +19,10 @@ plugins {
   id("org.jetbrains.kotlin.android")
 }
 
+// Check the root build.gradle.kts for common configurations (compileSdk, etc).
 android {
-  compileSdk = libs.versions.build.compileSdk.get().toInt()
-
   defaultConfig {
     applicationId = "app.wasabi.legacy"
-    minSdk = libs.versions.build.minSdk.get().toInt()
-    targetSdk = libs.versions.build.targetSdk.get().toInt()
     versionCode = 1
     versionName = "1.0"
 

@@ -34,6 +34,12 @@ allprojects {
 
   plugins.withType<com.android.build.gradle.BasePlugin>().configureEach {
     extensions.findByType<com.android.build.gradle.BaseExtension>()?.apply {
+      compileSdkVersion(libs.versions.build.compileSdk.get().toInt())
+      defaultConfig {
+        minSdk = libs.versions.build.minSdk.get().toInt()
+        targetSdk = libs.versions.build.targetSdk.get().toInt()
+      }
+
       compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
