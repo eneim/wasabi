@@ -27,18 +27,20 @@ import tel.schich.rfc5988.parsing.StringSlice
 import tel.schich.rfc5988.parsing.getOrNull
 import wasabi.base.getResult
 import wasabi.service.qiita.api.QiitaApi
-import wasabi.service.qiita.dao.QiitaArticle
+import wasabi.service.qiita.entities.Item
 
-class QiitaPagingSource(
+@Suppress("unused")
+class QiitaPagingSource<T : Any>(
   private val api: QiitaApi,
-) : PagingSource<Int, QiitaArticle>() {
+  private val mapper: (page: Int, item: Item) -> T,
+) : PagingSource<Int, T>() {
 
-  override fun getRefreshKey(state: PagingState<Int, QiitaArticle>): Int? {
+  override fun getRefreshKey(state: PagingState<Int, T>): Int? {
     val anchor = state.anchorPosition ?: return null
     return state.closestPageToPosition(anchor)?.prevKey
   }
 
-  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, QiitaArticle> {
+  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
     val page = params.key ?: MIN_PAGE
 
     return try {
@@ -56,7 +58,9 @@ class QiitaPagingSource(
          */
         val links = parseLink(StringSlice.of(headers.get(HEADER_LINK) ?: "")).getOrNull()
 
-        val items = (response.getResult().getOrThrow() ?: emptyList()).map(::QiitaArticle)
+        val items = (response.getResult().getOrThrow() ?: emptyList()).map { item ->
+          mapper(page, item)
+        }
 
         val prevPageKey = links?.find { it.rel == LINK_PREV }
           ?.page

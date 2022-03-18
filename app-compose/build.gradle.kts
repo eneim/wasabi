@@ -21,6 +21,8 @@ plugins {
 
 // Check the root build.gradle.kts for common configurations (compileSdk, etc).
 android {
+  namespace = "app.wasabi.compose"
+
   defaultConfig {
     applicationId = "app.wasabi.compose"
     versionCode = 1
@@ -69,6 +71,7 @@ dependencies {
   implementation(project(":service-qiita"))
 
   implementation(libs.androidx.core)
+  implementation(libs.androidx.material)
   implementation(libs.androidx.lifecycle.runtime)
   implementation(libs.androidx.datastore.preferences.core)
 
@@ -83,9 +86,7 @@ dependencies {
 
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.systemuicontroller)
-  implementation(libs.accompanist.pager)
-  implementation(libs.accompanist.pager.indicators)
-  implementation(libs.accompanist.webview)
+  implementation(libs.accompanist.placeholder.material)
 
   implementation(libs.coil)
   implementation(libs.coil.compose)

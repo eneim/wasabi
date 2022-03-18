@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (c) 2022. Nam Nguyen, nam@ene.im
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +17,12 @@
 
 <resources>
 
-  <style name="Theme.Wasabi" parent="android:Theme.Material.Light.NoActionBar">
+  <style name="Theme.Wasabi" parent="Theme.MaterialComponents.DayNight">
     <item name="android:statusBarColor">@color/purple_700</item>
+  </style>
+
+  <style name="Post.Title" parent="@style/TextAppearance.MaterialComponents.Body1">
+    <item name="android:textStyle">normal</item>
+    <item name="android:textSize">20sp</item>
   </style>
 </resources>

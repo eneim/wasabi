@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.wasabi.compose.ui.home
+package app.wasabi.compose.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,22 +27,23 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import wasabi.data.model.Post
 import wasabi.data.repository.QiitaRepository
-import wasabi.service.qiita.dao.QiitaArticle
 
+@Suppress("unused")
 class QiitaFeedViewModel(
   // TODO: DI
   private val repository: QiitaRepository = QiitaRepository.getInstance()
 ) : ViewModel() {
 
-  private val _articles = MutableStateFlow(PagingData.empty<QiitaArticle>())
-  val articles: Flow<PagingData<QiitaArticle>> = _articles.asStateFlow()
+  private val _posts = MutableStateFlow(PagingData.empty<Post>())
+  val posts: Flow<PagingData<Post>> = _posts.asStateFlow()
 
   init {
     viewModelScope.launch(Dispatchers.IO) {
-      repository.getArticles().flow
+      repository.getPosts().flow
         .cachedIn(this)
-        .onEach { feedData -> _articles.value = feedData }
+        .onEach { feedData -> _posts.value = feedData }
         .collect()
     }
   }

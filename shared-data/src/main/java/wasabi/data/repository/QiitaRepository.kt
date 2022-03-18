@@ -24,12 +24,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import wasabi.data.model.Post
+import wasabi.data.model.Service.QIITA
 import wasabi.service.common.ZonedDateTimeConverter
 import wasabi.service.qiita.api.QiitaApi
 import wasabi.service.qiita.dao.QiitaArticle
 import wasabi.service.qiita.domain.QiitaPagingSource
+import wasabi.service.qiita.entities.createdAtMillis
 import java.time.Duration
 
+@Suppress("unused")
 class QiitaRepository(
   private val qiitaApi: QiitaApi,
 ) {
@@ -47,7 +51,37 @@ class QiitaRepository(
       ),
       initialKey = null,
       pagingSourceFactory = {
-        QiitaPagingSource(qiitaApi)
+        QiitaPagingSource(qiitaApi) { _, item -> QiitaArticle(item) }
+      }
+    )
+  }
+
+  fun getPosts(
+    pageSize: Int = PAGE_SIZE,
+    enablePlaceholders: Boolean = true,
+  ): Pager<Int, Post> {
+    return Pager(
+      config = PagingConfig(
+        pageSize = pageSize,
+        initialLoadSize = pageSize,
+        enablePlaceholders = enablePlaceholders,
+        maxSize = pageSize * 5,
+      ),
+      initialKey = null,
+      pagingSourceFactory = {
+        QiitaPagingSource(qiitaApi) { page, item ->
+          Post(
+            id = item.id,
+            key = page,
+            link = item.url,
+            author = item.user.id,
+            title = item.title,
+            content = item.renderedBody,
+            score = item.likesCount,
+            createdMs = item.createdAtMillis,
+            service = QIITA,
+          )
+        }
       }
     )
   }

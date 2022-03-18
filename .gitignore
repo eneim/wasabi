@@ -31,3 +31,4 @@ local.properties
 # May enable later when we take the proguard into account.
 consumer-rules.pro
 proguard-rules.pro
+/.idea/checkstyle-idea.xml

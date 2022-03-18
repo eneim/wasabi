@@ -21,6 +21,8 @@ plugins {
 
 // Check the root build.gradle.kts for common configurations (compileSdk, etc).
 android {
+  namespace = "wasabi.base"
+
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")

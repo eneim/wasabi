@@ -17,11 +17,13 @@
 plugins {
   id("com.android.library")
   id("org.jetbrains.kotlin.android")
-  id("com.google.devtools.ksp") version ("1.6.10-1.0.2")
+  id("com.google.devtools.ksp") version ("1.6.10-1.0.4")
 }
 
 // Check the root build.gradle.kts for common configurations (compileSdk, etc).
 android {
+  namespace = "wasabi.service.qiita"
+
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
@@ -37,6 +39,7 @@ android {
 
 dependencies {
   implementation(project(":base"))
+  implementation(project(":service-common"))
   implementation(libs.androidx.core)
 
   implementation(libs.retrofit)

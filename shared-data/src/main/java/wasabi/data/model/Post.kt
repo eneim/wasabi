@@ -25,7 +25,10 @@ data class Post(
   val author: String?,
   val title: String,
   val content: String?,
-  val score: Int?,
+  val score: Int,
   val createdMs: Long,
   val service: Service,
-) : Unique, Keyed
+) : Unique, Keyed {
+
+  // val website: String? = Uri.parse(link).host
+}

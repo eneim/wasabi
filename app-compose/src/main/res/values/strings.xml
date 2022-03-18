@@ -16,4 +16,9 @@
 
 <resources>
   <string name="app_name">Wasabi</string>
+
+  <plurals name="score_count">
+    <item quantity="zero">%1$d</item>
+    <item quantity="other">+ %1$d</item>
+  </plurals>
 </resources>

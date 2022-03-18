@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-package app.wasabi.compose.ui.home
+package app.wasabi.compose.screens.home
 
-import androidx.compose.runtime.Composable
-
-@Composable
-fun Home() {
-}

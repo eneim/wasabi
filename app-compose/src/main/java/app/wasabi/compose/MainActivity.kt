@@ -16,16 +16,39 @@
 
 package app.wasabi.compose
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import app.wasabi.compose.ui.WasabiApp
+import androidx.core.view.WindowCompat
+import app.wasabi.compose.navigation.WasabiApp
+import app.wasabi.compose.utils.ClockBroadcastReceiver
 
 class MainActivity : ComponentActivity() {
+
+  private val clockBroadcastReceiver = ClockBroadcastReceiver()
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    WindowCompat.setDecorFitsSystemWindows(
+      /* window = */ window,
+      /* decorFitsSystemWindows = */ false
+    )
+
     setContent {
-      WasabiApp()
+      val currentTimeMillis = clockBroadcastReceiver.currentTimeMillis
+      WasabiApp(currentTimeMillis = currentTimeMillis)
     }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    registerReceiver(clockBroadcastReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
+  }
+
+  override fun onStop() {
+    super.onStop()
+    unregisterReceiver(clockBroadcastReceiver)
   }
 }

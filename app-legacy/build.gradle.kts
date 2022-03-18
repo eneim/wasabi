@@ -21,6 +21,8 @@ plugins {
 
 // Check the root build.gradle.kts for common configurations (compileSdk, etc).
 android {
+  namespace = "app.wasabi.legacy"
+
   defaultConfig {
     applicationId = "app.wasabi.legacy"
     versionCode = 1
