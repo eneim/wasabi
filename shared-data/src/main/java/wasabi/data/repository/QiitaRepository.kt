@@ -30,12 +30,27 @@ import wasabi.service.common.ZonedDateTimeConverter
 import wasabi.service.qiita.api.QiitaApi
 import wasabi.service.qiita.dao.QiitaArticle
 import wasabi.service.qiita.domain.QiitaPagingSource
+import wasabi.service.qiita.entities.Item
 import wasabi.service.qiita.entities.createdAtMillis
 import java.time.Duration
 
 @Suppress("unused")
 class QiitaRepository(
   private val qiitaApi: QiitaApi,
+  private val articleMapper: (item: Item, page: Number) -> Post = { item, page ->
+    Post(
+      internalId = item.id,
+      key = page,
+      link = item.url,
+      author = item.user.id,
+      title = item.title,
+      content = item.renderedBody,
+      point = item.likesCount,
+      commentsCount = item.commentsCount,
+      createdMs = item.createdAtMillis,
+      service = QIITA,
+    )
+  }
 ) {
 
   fun getArticles(
@@ -71,13 +86,14 @@ class QiitaRepository(
       pagingSourceFactory = {
         QiitaPagingSource(qiitaApi) { page, item ->
           Post(
-            id = item.id,
+            internalId = item.id,
             key = page,
             link = item.url,
             author = item.user.id,
             title = item.title,
             content = item.renderedBody,
-            score = item.likesCount,
+            point = item.likesCount,
+            commentsCount = item.commentsCount,
             createdMs = item.createdAtMillis,
             service = QIITA,
           )

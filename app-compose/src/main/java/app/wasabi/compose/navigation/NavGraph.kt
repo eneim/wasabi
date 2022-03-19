@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package wasabi.data.model
+package app.wasabi.compose.navigation
 
-import android.net.Uri
-import wasabi.service.common.model.Keyed
+sealed class Screen(val route: String) {
 
-data class Post(
-  override val key: Number,
-  val internalId: String,
-  val link: String,
-  val author: String?,
-  val title: String,
-  val content: String?,
-  val point: Int,
-  val commentsCount: Int,
-  val createdMs: Long,
-  val service: Service,
-) : Unique, Keyed {
+  object Home : Screen("home")
 
-  override val id: String = "${service.site}::$internalId"
-
-  val website: String? = Uri.parse(link).host
+  object HnStory : Screen("story/{id}") {
+    fun createRoute(storyId: String): String = "story/$storyId"
+  }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package app.wasabi.compose.screens.home
+package app.wasabi.compose.screens.hnews
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 import wasabi.data.model.Post
 import wasabi.data.repository.HackerNewsRepository
 
-class HackerNewsFeedViewModel constructor(
+class HackerNewsViewModel constructor(
   private val repository: HackerNewsRepository = HackerNewsRepository.getInstance(),
 ) : ViewModel() {
 

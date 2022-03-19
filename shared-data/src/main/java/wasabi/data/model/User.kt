@@ -19,10 +19,13 @@ package wasabi.data.model
 import wasabi.service.common.dao.LinkPreview
 
 data class User(
-  override val id: String,
+  val internalId: String, // ID used by the service.
   val name: String?,
-  val link: String?,
-  val linkPreview: LinkPreview?,
+  val link: String? = null,
+  val linkPreview: LinkPreview? = null,
   val createdTimestampMillis: Long,
   val service: Service,
-) : Unique
+) : Unique {
+
+  override val id: String = "${service.site}::$internalId"
+}

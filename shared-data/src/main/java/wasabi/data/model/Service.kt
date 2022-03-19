@@ -18,16 +18,18 @@ package wasabi.data.model
 
 import androidx.room.TypeConverter
 
-enum class Service {
-  HACKER_NEWS,
-  QIITA, ;
+enum class Service(val site: String) {
+  HACKER_NEWS("https://news.ycombinator.com/"),
+  QIITA("https://qiita.com/"), ;
 
   companion object Converter {
 
-    @TypeConverter
-    fun fromService(service: Service): String = service.name
+    private val services = values()
 
     @TypeConverter
-    fun toService(name: String): Service = valueOf(name)
+    fun fromService(service: Service): String = service.site
+
+    @TypeConverter
+    fun toService(site: String): Service = services.first { it.site == site }
   }
 }

@@ -18,12 +18,36 @@ package app.wasabi.compose.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import app.wasabi.compose.R
+
+private val NoticiaText = FontFamily(
+  Font(resId = R.font.noticia_text_regular),
+  Font(resId = R.font.noticia_text_regular, weight = FontWeight.W400),
+  Font(resId = R.font.noticia_text_italic, weight = FontWeight.W400, style = FontStyle.Italic),
+  Font(resId = R.font.noticia_text_bold, weight = FontWeight.W700),
+  Font(resId = R.font.noticia_text_bold_italic, weight = FontWeight.W700, style = FontStyle.Italic)
+)
+
+private val Inter = FontFamily(
+  Font(resId = R.font.inter_thin, weight = FontWeight.W100),
+  Font(resId = R.font.inter_extra_light, weight = FontWeight.W200),
+  Font(resId = R.font.inter_light, weight = FontWeight.W300),
+  Font(resId = R.font.inter_regular, weight = FontWeight.W400),
+  Font(resId = R.font.inter_medium, weight = FontWeight.W500),
+  Font(resId = R.font.inter_semi_bold, weight = FontWeight.W600),
+  Font(resId = R.font.inter_bold, weight = FontWeight.W700),
+  Font(resId = R.font.inter_extra_bold, weight = FontWeight.W800),
+  Font(resId = R.font.inter_black, weight = FontWeight.W900),
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+  defaultFontFamily = Inter,
   body1 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Normal,

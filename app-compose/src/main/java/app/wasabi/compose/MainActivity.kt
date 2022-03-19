@@ -22,13 +22,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import app.wasabi.compose.navigation.WasabiApp
+import app.wasabi.compose.screens.hnews.HackerNewsViewModel
 import app.wasabi.compose.utils.ClockBroadcastReceiver
 
 class MainActivity : ComponentActivity() {
 
   private val clockBroadcastReceiver = ClockBroadcastReceiver()
 
+  @Suppress("RemoveExplicitTypeArguments")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     WindowCompat.setDecorFitsSystemWindows(
@@ -38,7 +42,11 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       val currentTimeMillis = clockBroadcastReceiver.currentTimeMillis
-      WasabiApp(currentTimeMillis = currentTimeMillis)
+      WasabiApp(
+        navController = rememberNavController(),
+        currentTimeMillis = currentTimeMillis,
+        hackerNewsViewModel = viewModel<HackerNewsViewModel>()
+      )
     }
   }
 

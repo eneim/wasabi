@@ -74,6 +74,7 @@ dependencies {
   implementation(libs.androidx.material)
   implementation(libs.androidx.lifecycle.runtime)
   implementation(libs.androidx.datastore.preferences.core)
+  implementation(libs.androidx.navigation.compose)
 
   implementation(libs.androidx.room.paging)
 

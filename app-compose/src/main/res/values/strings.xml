@@ -21,4 +21,14 @@
     <item quantity="zero">%1$d</item>
     <item quantity="other">+ %1$d</item>
   </plurals>
+
+  <plurals name="stat_comment">
+    <item quantity="one">%1$d comment</item>
+    <item quantity="other">%1$d comments</item>
+  </plurals>
+
+  <plurals name="stat_point">
+    <item quantity="one">%1$d point</item>
+    <item quantity="other">%1$d points</item>
+  </plurals>
 </resources>

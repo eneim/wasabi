@@ -21,6 +21,7 @@ import com.squareup.moshi.ToJson
 import java.time.ZonedDateTime
 
 object ZonedDateTimeConverter {
+
   @FromJson
   fun fromJson(value: String): ZonedDateTime? = ZonedDateTime.parse(value)
 

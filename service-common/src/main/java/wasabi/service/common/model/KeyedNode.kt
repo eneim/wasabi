@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package wasabi.data.model
+package wasabi.service.common.model
 
-import android.net.Uri
-import wasabi.service.common.model.Keyed
+interface KeyedNode : Keyed {
 
-data class Post(
-  override val key: Number,
-  val internalId: String,
-  val link: String,
-  val author: String?,
-  val title: String,
-  val content: String?,
-  val point: Int,
-  val commentsCount: Int,
-  val createdMs: Long,
-  val service: Service,
-) : Unique, Keyed {
+  val children: List<KeyedNode>
 
-  override val id: String = "${service.site}::$internalId"
+  val tree: List<KeyedNode>
 
-  val website: String? = Uri.parse(link).host
+  val treeSize: Int
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022. Nam Nguyen, nam@ene.im
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!-- TODO: learn about downloadable font -->
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+  <font
+      android:font="@font/literata_black"
+      android:fontWeight="900"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_black_italic"
+      android:fontWeight="900"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_extra_bold"
+      android:fontWeight="800"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_extra_bold_italic"
+      android:fontWeight="800"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_bold"
+      android:fontWeight="700"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_bold_italic"
+      android:fontWeight="700"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_semi_bold"
+      android:fontWeight="600"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_semi_bold_italic"
+      android:fontWeight="600"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_medium"
+      android:fontWeight="500"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_medium_italic"
+      android:fontWeight="500"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_regular"
+      android:fontWeight="400"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_italic"
+      android:fontWeight="400"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_light"
+      android:fontWeight="300"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_light_italic"
+      android:fontWeight="300"
+      android:fontStyle="italic" />
+
+  <font
+      android:font="@font/literata_extra_light"
+      android:fontWeight="200"
+      android:fontStyle="normal" />
+
+  <font
+      android:font="@font/literata_extra_light_italic"
+      android:fontWeight="200"
+      android:fontStyle="italic" />
+
+</font-family>

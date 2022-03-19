@@ -14,25 +14,14 @@
  * limitations under the License.
  */
 
-package wasabi.data.model
+package app.wasabi.compose.screens.hnews
 
-import android.net.Uri
-import wasabi.service.common.model.Keyed
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import wasabi.data.model.Post
+import wasabi.service.common.model.KeyedNode
 
-data class Post(
-  override val key: Number,
-  val internalId: String,
-  val link: String,
-  val author: String?,
-  val title: String,
-  val content: String?,
-  val point: Int,
-  val commentsCount: Int,
-  val createdMs: Long,
-  val service: Service,
-) : Unique, Keyed {
-
-  override val id: String = "${service.site}::$internalId"
-
-  val website: String? = Uri.parse(link).host
-}
+data class ItemState(
+  val post: Post,
+  val comments: Flow<PagingData<KeyedNode>>,
+)

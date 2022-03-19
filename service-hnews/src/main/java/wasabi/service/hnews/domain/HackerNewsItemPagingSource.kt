@@ -21,22 +21,35 @@ import androidx.paging.PagingSource.LoadParams.Refresh
 import androidx.paging.PagingState
 import wasabi.service.common.model.Keyed
 
-class HackerNewsPagingSource<T : Keyed>(
+class HackerNewsItemPagingSource<T : Keyed>(
   private val ids: List<Long>,
   private val loader: suspend (List<Long>) -> List<T>,
 ) : PagingSource<Long, T>() {
 
   override val keyReuseSupported: Boolean = true
 
+  // Copied from https://developer.android.com/topic/libraries/architecture/paging/v3-paged-data#pagingsource
+  // The refresh key is used for subsequent refresh calls to PagingSource.load after the initial load
   override fun getRefreshKey(state: PagingState<Long, T>): Long? {
+    // Try to find the page key of the closest page to anchorPosition, from
+    // either the prevKey or the nextKey, but you need to handle nullability
+    // here:
+    //  * prevKey == null -> anchorPage is the first page.
+    //  * nextKey == null -> anchorPage is the last page.
+    //  * both prevKey and nextKey null -> anchorPage is the initial page, so
+    //    just return null.
     val anchor = state.anchorPosition ?: return null
-    return state.closestItemToPosition(anchor)?.key?.toLong()
+    val anchorPage = state.closestPageToPosition(anchor)
+    return anchorPage?.prevKey?.plus(1)
+      ?: anchorPage?.nextKey?.minus(1)
   }
 
   override suspend fun load(params: LoadParams<Long>): LoadResult<Long, T> {
+    if (ids.isEmpty()) return LoadResult.Page(emptyList(), null, null)
+
     val startIndex = ids.indexOf(params.key).coerceAtLeast(0)
     val endIndex = startIndex + params.loadSize // Exclusive.
-    val idsToLoad = ids.subList(startIndex, endIndex)
+    val idsToLoad = ids.subList(startIndex, endIndex.coerceAtMost(ids.size))
 
     return try {
       val items = loader(idsToLoad)
@@ -51,7 +64,7 @@ class HackerNewsPagingSource<T : Keyed>(
         prevKey = prevKey,
         nextKey = nextPageKey,
         itemsBefore = startIndex,
-        itemsAfter = ids.size - endIndex,
+        itemsAfter = (ids.size - endIndex).coerceAtLeast(0),
       )
     } catch (error: Throwable) {
       error.printStackTrace()

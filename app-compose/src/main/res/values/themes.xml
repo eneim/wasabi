@@ -21,8 +21,14 @@
     <item name="android:statusBarColor">@color/purple_700</item>
   </style>
 
-  <style name="Post.Title" parent="@style/TextAppearance.MaterialComponents.Body1">
+  <style name="Post.Title" parent="@style/TextAppearance.MaterialComponents.Subtitle1">
     <item name="android:textStyle">normal</item>
-    <item name="android:textSize">20sp</item>
+    <item name="fontWeight">600</item>
+    <item name="fontFamily">@font/inter_semi_bold</item>
+  </style>
+
+  <style name="Post.Comment" parent="@style/TextAppearance.MaterialComponents.Body2">
+    <item name="fontFamily">@font/font_literata</item>
+    <item name="android:fontFamily">@font/font_literata</item>
   </style>
 </resources>
