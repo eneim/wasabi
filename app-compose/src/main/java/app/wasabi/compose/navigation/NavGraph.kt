@@ -16,11 +16,24 @@
 
 package app.wasabi.compose.navigation
 
-sealed class Screen(val route: String) {
+import androidx.navigation.NavDeepLink
+import androidx.navigation.navDeepLink
+
+sealed class Screen(
+  val route: String,
+  val deepLinks: List<NavDeepLink> = emptyList(),
+) {
 
   object Home : Screen("home")
 
-  object HnStory : Screen("story/{id}") {
+  object HnStory : Screen(
+    route = "story/{id}",
+    deepLinks = listOf(
+      navDeepLink { uriPattern = "wasabi://news.ycombinator.com/item?id={id}" },
+      navDeepLink { uriPattern = "https://news.ycombinator.com/item?id={id}" },
+      navDeepLink { uriPattern = "http://news.ycombinator.com/item?id={id}" }
+    )
+  ) {
     fun createRoute(storyId: String): String = "story/$storyId"
   }
 }

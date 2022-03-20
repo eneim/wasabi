@@ -65,7 +65,10 @@ fun WasabiApp(
         )
       }
 
-      composable(Screen.HnStory.route) { entry ->
+      composable(
+        route = Screen.HnStory.route,
+        deepLinks = Screen.HnStory.deepLinks,
+      ) { entry ->
         val viewModel: HackerNewsItemViewModel = viewModel(
           factory = HackerNewsItemViewModel.provideFactory(
             owner = entry,
