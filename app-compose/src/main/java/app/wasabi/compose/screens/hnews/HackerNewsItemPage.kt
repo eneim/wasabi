@@ -22,27 +22,30 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemGesturesPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
-import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
-import androidx.core.text.HtmlCompat.FROM_HTML_OPTION_USE_CSS_COLORS
-import androidx.core.text.parseAsHtml
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import app.wasabi.compose.R
 import app.wasabi.compose.screens.post.PostCell
 import app.wasabi.compose.ui.widget.HtmlText
+import app.wasabi.compose.utils.asHtml
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
@@ -57,7 +60,9 @@ fun HackerNewsItemPage(
   currentTimeMillis: Long,
 ) {
   val state = viewModel.uiState
-  HackerNewsItemPage(state, currentTimeMillis)
+  Surface(modifier = Modifier.fillMaxSize()) {
+    HackerNewsItemPage(state, currentTimeMillis)
+  }
 }
 
 @Composable
@@ -69,33 +74,32 @@ private fun HackerNewsItemPage(
     val post = state.post
     val comments = remember { state.comments }.collectAsLazyPagingItems()
 
-    LazyColumn(
+    Column(
       modifier = Modifier
         .fillMaxSize()
         .systemGesturesPadding()
     ) {
-      item(key = post.id) {
-        PostCell(post = post, currentTimeMillis = currentTimeMillis)
-      }
+      PostCell(
+        post = post,
+        currentTimeMillis = currentTimeMillis,
+      )
+
+      Divider()
 
       if (comments.itemSnapshotList.isEmpty()) {
-        item {
-          Column(
-            modifier = Modifier
-              .fillMaxSize()
-              .statusBarsPadding(),
-          ) {
-            repeat(20) {
-              ItemComment(
-                data = null,
-                currentTimeMillis = currentTimeMillis,
-              )
-            }
+        Column {
+          repeat(20) {
+            ItemComment(
+              data = null,
+              currentTimeMillis = currentTimeMillis,
+            )
           }
         }
       } else {
-        items(comments) { comment ->
-          ItemComment(comment, currentTimeMillis)
+        LazyColumn {
+          items(comments) { comment ->
+            ItemComment(comment, currentTimeMillis)
+          }
         }
       }
     }
@@ -136,16 +140,20 @@ private fun ItemComment(
       )
     }
   } else if (data is Comment) {
-    Divider(startIndent = (data.level * 16).dp)
+    val indent = (keyLine * 2 * data.level).coerceAtMost(160.dp)
+    Divider(
+      startIndent = indent,
+      thickness = if (data.level == 0) 2.dp else 1.dp,
+    )
     Column(
       verticalArrangement = Arrangement.spacedBy(keyLine),
       modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(
-          start = (data.level.plus(1) * 16).dp,
-          top = keyLine,
-          bottom = keyLine,
+          start = keyLine * 2 + indent,
+          top = keyLine * 2,
+          bottom = keyLine * 2,
           end = keyLine * 2
         )
     ) {
@@ -158,10 +166,12 @@ private fun ItemComment(
       Text(
         text = buildAnnotatedString {
           append(author)
-          if (length > 0 && createdRelativeTime != null) {
-            append("・")
+          withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
+            if (length > 0 && createdRelativeTime != null) {
+              append("・")
+            }
+            append("$createdRelativeTime")
           }
-          append("$createdRelativeTime")
         },
         style = MaterialTheme.typography.subtitle2,
         maxLines = 1,
@@ -169,9 +179,7 @@ private fun ItemComment(
       )
 
       HtmlText(
-        text = data.content.parseAsHtml(
-          flags = FROM_HTML_MODE_COMPACT and FROM_HTML_OPTION_USE_CSS_COLORS
-        ).trim(),
+        text = data.content.asHtml(context = LocalContext.current),
         textAppearance = R.style.Post_Comment,
       )
     }

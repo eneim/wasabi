@@ -54,7 +54,7 @@ fun PostCell(
   onClick: (Post) -> Unit = { /* no-op*/ },
 ) {
   val resources = LocalContext.current.resources
-  val keyLine = 8.dp
+  val keyLine = 4.dp
 
   val (creationInfo, htmlTitle, stats) = remember(post, currentTimeMillis) {
     if (post == null) {
@@ -65,30 +65,32 @@ fun PostCell(
         stats = AnnotatedString("Dummy stat info"),
       )
     } else {
-      val author = "${post.author}"
       val createdRelativeTime = DateUtils.getRelativeTimeSpanString(
         post.createdMs,
         currentTimeMillis,
-        DateUtils.MINUTE_IN_MILLIS
+        DateUtils.MINUTE_IN_MILLIS,
+        DateUtils.FORMAT_ABBREV_RELATIVE,
       )
       val website = post.website
 
       PostCellData(
         creationInfo = buildAnnotatedString {
-          withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
-            append(author)
-          }
-          if (length > 0 && createdRelativeTime != null) {
-            append("・")
-          }
           append("$createdRelativeTime")
-          if (length > 0 && website != null && website.isNotBlank()) {
+          if (website != null && website.isNotBlank()) {
             append("・")
             append(website)
           }
         },
         htmlTitle = post.title.parseAsHtml(),
-        stats = resources.getStat(post),
+        stats = buildAnnotatedString {
+          append(post.author.orEmpty())
+          withStyle(SpanStyle(fontWeight = FontWeight.Normal)) {
+            if (length > 0) {
+              append("・")
+              append(resources.getStat(post))
+            }
+          }
+        }
       )
     }
   }
@@ -102,7 +104,7 @@ fun PostCell(
       },
   ) {
     Column(
-      modifier = Modifier.padding(keyLine * 2),
+      modifier = Modifier.padding(keyLine * 4),
       verticalArrangement = Arrangement.spacedBy(keyLine),
     ) {
       Text(

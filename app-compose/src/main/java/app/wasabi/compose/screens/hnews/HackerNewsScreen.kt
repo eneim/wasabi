@@ -18,8 +18,9 @@ package app.wasabi.compose.screens.hnews
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
@@ -38,7 +39,7 @@ fun HackerNewsFeed(
     LazyColumn(
       modifier = modifier
         .fillMaxSize()
-        .statusBarsPadding()
+        .systemBarsPadding()
     ) {
       itemsIndexed(data) { _: Int, value: Post? ->
         PostCell(
@@ -46,13 +47,15 @@ fun HackerNewsFeed(
           currentTimeMillis = currentTimeMillis,
           onClick = onClick,
         )
+
+        Divider()
       }
     }
   } else {
     Column(
       modifier = Modifier
         .fillMaxSize()
-        .statusBarsPadding(),
+        .systemBarsPadding(),
     ) {
       repeat(20) {
         PostCell(

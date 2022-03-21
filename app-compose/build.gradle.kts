@@ -94,6 +94,10 @@ dependencies {
 
   implementation(libs.square.logcat)
 
+  implementation(libs.jsoup)
+  implementation("io.noties.markwon:core:4.6.2")
+  implementation("io.noties.markwon:html:4.6.2")
+
   testImplementation(libs.test.junit.core)
   androidTestImplementation(libs.test.androidx.junit)
   androidTestImplementation(libs.test.androidx.espresso.core)
